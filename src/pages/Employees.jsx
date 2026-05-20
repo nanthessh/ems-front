@@ -1,0 +1,127 @@
+import { useState } from 'react'
+import Navbar from '../components/Navbar'
+import EmployeeModal from '../components/EmployeeModal'
+import { useEmployees } from '../hooks/useEmployees'
+import { useDepartments } from '../hooks/useDepartments'
+import { useAuth } from '../context/AuthContext'
+
+export default function Employees() {
+  const { employees, loading, error, save, remove } = useEmployees()
+  const { departments } = useDepartments()
+  const { isAdmin } = useAuth()
+  const [search, setSearch]     = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selected, setSelected]   = useState(null)
+  const [deleteId, setDeleteId]   = useState(null)
+
+  const filtered = employees.filter((e) =>
+    e.name.toLowerCase().includes(search.toLowerCase()) ||
+    e.email.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const handleSave = async (form) => {
+    await save(form)
+    setModalOpen(false)
+  }
+
+  const handleDelete = async () => {
+    await remove(deleteId)
+    setDeleteId(null)
+  }
+
+  return (
+    <div className="layout">
+      <div className="bg-blobs">
+        <div className="blob blob-1" /><div className="blob blob-2" /><div className="blob blob-3" />
+      </div>
+
+      <Navbar />
+
+      <main className="main-content">
+        <div className="page-header">
+          <h1>👥 Employees</h1>
+          {isAdmin && (
+            <button className="btn btn-primary" onClick={() => { setSelected(null); setModalOpen(true) }}>
+              + Add Employee
+            </button>
+          )}
+        </div>
+
+        {error && <div className="alert error">⚠ {error}</div>}
+
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="🔍 Search by name or email..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+        <div className="table-wrapper">
+          {loading ? (
+            <div className="empty">Loading...</div>
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Department</th>
+                  <th>Salary</th>
+                  <th>Joined Date</th>
+                  {isAdmin && <th>Actions</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.length === 0 ? (
+                  <tr><td colSpan={isAdmin ? 7 : 6} className="empty">No employees found.</td></tr>
+                ) : (
+                  filtered.map((emp, i) => (
+                    <tr key={emp.id}>
+                      <td>{i + 1}</td>
+                      <td>{emp.name}</td>
+                      <td>{emp.email}</td>
+                      <td><span className="badge">{emp.departmentName || '-'}</span></td>
+                      <td>${Number(emp.salary).toLocaleString()}</td>
+                      <td>{emp.joinedDate ? new Date(emp.joinedDate).toLocaleDateString() : '-'}</td>
+                      {isAdmin && (
+                        <td>
+                          <button className="btn btn-sm btn-edit" onClick={() => { setSelected(emp); setModalOpen(true) }}>Edit</button>
+                          <button className="btn btn-sm btn-danger" onClick={() => setDeleteId(emp.id)}>Delete</button>
+                        </td>
+                      )}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </main>
+
+      {modalOpen && (
+        <EmployeeModal
+          employee={selected}
+          departments={departments}
+          onSave={handleSave}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
+
+      {deleteId && (
+        <div className="modal-overlay" onClick={() => setDeleteId(null)}>
+          <div className="modal confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Confirm Delete</h3>
+            <p>Are you sure you want to delete this employee?</p>
+            <div className="modal-footer">
+              <button className="btn btn-ghost" onClick={() => setDeleteId(null)}>Cancel</button>
+              <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
