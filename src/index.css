@@ -341,9 +341,31 @@ body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+.auth-mobile-brand {
+  display: none;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.auth-mobile-brand .brand-logo {
+  margin: 0 auto 0.75rem;
+}
+.auth-mobile-brand h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+.auth-mobile-brand p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+
 @media (max-width: 768px) {
   .auth-left { display: none; }
   .auth-right { max-width: 100%; }
+  .auth-mobile-brand { display: block; }
 }
 
 /* ── Employees / Departments Pages ── */
