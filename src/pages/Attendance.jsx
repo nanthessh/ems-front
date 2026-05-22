@@ -127,14 +127,14 @@ export default function Attendance() {
                   ? <tr><td colSpan={isAdmin ? 8 : 5} className="empty">No records found.</td></tr>
                   : records.map((r, i) => (
                     <tr key={r.id}>
-                      <td>{i + 1}</td>
-                      {isAdmin && <td>{r.employeeName}</td>}
-                      {isAdmin && <td><span className="badge">{r.departmentName}</span></td>}
-                      <td>{new Date(r.date).toLocaleDateString()}</td>
-                      <td>{r.checkIn || '—'}</td>
-                      <td>{r.checkOut || '—'}</td>
-                      <td><span className={`badge ${statusColor[r.status] || ''}`}>{r.status}</span></td>
-                      <td>{r.notes || '—'}</td>
+                      <td data-label="#">{i + 1}</td>
+                      {isAdmin && <td data-label="Employee">{r.employeeName}</td>}
+                      {isAdmin && <td data-label="Department"><span className="badge">{r.departmentName}</span></td>}
+                      <td data-label="Date">{new Date(r.date).toLocaleDateString()}</td>
+                      <td data-label="Check In">{r.checkIn || '—'}</td>
+                      <td data-label="Check Out">{r.checkOut || '—'}</td>
+                      <td data-label="Status"><span className={`badge ${statusColor[r.status] || ''}`}>{r.status}</span></td>
+                      <td data-label="Notes">{r.notes || '—'}</td>
                     </tr>
                   ))
                 }

@@ -80,14 +80,14 @@ export default function Employees() {
                 ) : (
                   filtered.map((emp, i) => (
                     <tr key={emp.id}>
-                      <td>{i + 1}</td>
-                      <td>{emp.name}</td>
-                      <td>{emp.email}</td>
-                      <td><span className="badge">{emp.departmentName || '-'}</span></td>
-                      <td>${Number(emp.salary).toLocaleString()}</td>
-                      <td>{emp.joinedDate ? new Date(emp.joinedDate).toLocaleDateString() : '-'}</td>
+                      <td data-label="#">{i + 1}</td>
+                      <td data-label="Name">{emp.name}</td>
+                      <td data-label="Email">{emp.email}</td>
+                      <td data-label="Department"><span className="badge">{emp.departmentName || '-'}</span></td>
+                      <td data-label="Salary">${Number(emp.salary).toLocaleString()}</td>
+                      <td data-label="Joined">{emp.joinedDate ? new Date(emp.joinedDate).toLocaleDateString() : '-'}</td>
                       {isAdmin && (
-                        <td>
+                        <td data-label="Actions">
                           <button className="btn btn-sm btn-edit" onClick={() => { setSelected(emp); setModalOpen(true) }}>Edit</button>
                           <button className="btn btn-sm btn-danger" onClick={() => setDeleteId(emp.id)}>Delete</button>
                         </td>

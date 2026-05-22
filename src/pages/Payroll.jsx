@@ -153,14 +153,14 @@ export default function Payroll() {
                     ? <tr><td colSpan={8} className="empty">No payroll records.</td></tr>
                     : records.map((r, i) => (
                       <tr key={r.id}>
-                        <td>{i + 1}</td>
-                        <td>{r.employeeName}</td>
-                        <td><span className="badge">{r.departmentName}</span></td>
-                        <td>{MONTHS[r.month - 1]} {r.year}</td>
-                        <td>${Number(r.basicSalary).toLocaleString()}</td>
-                        <td className="gradient-text" style={{ fontWeight: 700 }}>${Number(r.netSalary).toLocaleString()}</td>
-                        <td><span className={`badge ${r.status === 'Paid' ? 'badge-green' : 'badge-yellow'}`}>{r.status}</span></td>
-                        <td>
+                        <td data-label="#">{i + 1}</td>
+                        <td data-label="Employee">{r.employeeName}</td>
+                        <td data-label="Department"><span className="badge">{r.departmentName}</span></td>
+                        <td data-label="Month">{MONTHS[r.month - 1]} {r.year}</td>
+                        <td data-label="Basic">${Number(r.basicSalary).toLocaleString()}</td>
+                        <td data-label="Net Salary" className="gradient-text" style={{ fontWeight: 700 }}>${Number(r.netSalary).toLocaleString()}</td>
+                        <td data-label="Status"><span className={`badge ${r.status === 'Paid' ? 'badge-green' : 'badge-yellow'}`}>{r.status}</span></td>
+                        <td data-label="Actions">
                           <button className="btn btn-sm btn-edit" style={{ marginRight: '0.3rem' }} onClick={() => setSlip(r)}>Slip</button>
                           {r.status === 'Draft' && <button className="btn btn-sm btn-action green-btn" onClick={() => handleMarkPaid(r.id)}>Mark Paid</button>}
                         </td>

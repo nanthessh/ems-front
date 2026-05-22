@@ -74,11 +74,11 @@ export default function Departments() {
                 ) : (
                   filtered.map((dept, i) => (
                     <tr key={dept.id}>
-                      <td>{i + 1}</td>
-                      <td><span className="badge">{dept.name}</span></td>
-                      <td>{dept.description || <span style={{ color: 'rgba(255,255,255,0.3)' }}>—</span>}</td>
+                      <td data-label="#">{i + 1}</td>
+                      <td data-label="Name"><span className="badge">{dept.name}</span></td>
+                      <td data-label="Description">{dept.description || <span style={{ color: 'rgba(255,255,255,0.3)' }}>—</span>}</td>
                       {isAdmin && (
-                        <td>
+                        <td data-label="Actions">
                           <button className="btn btn-sm btn-edit" onClick={() => { setSelected(dept); setModalOpen(true) }}>Edit</button>
                           <button className="btn btn-sm btn-danger" onClick={() => setDeleteId(dept.id)}>Delete</button>
                         </td>

@@ -154,15 +154,15 @@ export default function Leave() {
                       ? <tr><td colSpan={9} className="empty">No leave requests.</td></tr>
                       : requests.map((r, i) => (
                         <tr key={r.id}>
-                          <td>{i + 1}</td>
-                          <td>{r.employeeName}</td>
-                          <td><span className="badge">{r.leaveTypeName}</span></td>
-                          <td>{new Date(r.startDate).toLocaleDateString()}</td>
-                          <td>{new Date(r.endDate).toLocaleDateString()}</td>
-                          <td>{r.totalDays}</td>
-                          <td style={{ maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.reason}</td>
-                          <td><span className={`badge ${statusColor[r.status] || ''}`}>{r.status}</span></td>
-                          <td>
+                          <td data-label="#">{i + 1}</td>
+                          <td data-label="Employee">{r.employeeName}</td>
+                          <td data-label="Type"><span className="badge">{r.leaveTypeName}</span></td>
+                          <td data-label="From">{new Date(r.startDate).toLocaleDateString()}</td>
+                          <td data-label="To">{new Date(r.endDate).toLocaleDateString()}</td>
+                          <td data-label="Days">{r.totalDays}</td>
+                          <td data-label="Reason" style={{ maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.reason}</td>
+                          <td data-label="Status"><span className={`badge ${statusColor[r.status] || ''}`}>{r.status}</span></td>
+                          <td data-label="Actions">
                             {r.status === 'Pending' && (
                               <>
                                 <button className="btn btn-sm btn-action green-btn" style={{ marginRight: '0.3rem' }} onClick={() => handleStatus(r.id, 'Approved')}>✓</button>
