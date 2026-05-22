@@ -55,6 +55,11 @@ export default function Register() {
 
       <div className="auth-right">
         <div className="auth-card">
+          <div className="auth-mobile-brand">
+            <div className="brand-logo">EMS</div>
+            <h1>Employee Management System</h1>
+            <p>Manage your workforce efficiently and effectively.</p>
+          </div>
           <div className="auth-card-header">
             <h2>Create Account</h2>
             <p>Fill in the details to get started</p>
